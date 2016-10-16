@@ -19,8 +19,8 @@ describe Tender do
   end
 
   let(:shipment_tender_edited_data) do
-    ShipmentTenderData.new('Import', 'Shoes tender',
-                           Route.new('Vilnius', 'Klaipeda'), Date.today)
+    ShipmentTenderData.new('Export', 'Wood tender',
+                           Route.new('Vilnius', 'Kaunas'), Date.today)
   end
 
   let(:shipment_proposal) do

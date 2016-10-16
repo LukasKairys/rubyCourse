@@ -2,7 +2,8 @@ require 'proposal'
 require 'shipmenttenderdata'
 # Tender class
 class Tender
-  attr_reader :shipment_tender_data, :proposals, :max_proposals_count
+  attr_reader :shipment_tender_data, :proposals, :max_proposals_count, :a,
+              :b, :c, :d
 
   def initialize(shipment_tender_data)
     @shipment_tender_data = shipment_tender_data

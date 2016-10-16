@@ -1,4 +1,4 @@
-require 'tender'
+require_relative 'tender'
 require 'yaml'
 # JSON tender storage
 class DataStorage
@@ -12,6 +12,7 @@ class DataStorage
   end
 
   def load_data
+    return unless File.file?(@file_path)
     data_yaml = File.read(@file_path)
     YAML.load data_yaml
   end

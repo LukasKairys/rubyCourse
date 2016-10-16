@@ -1,5 +1,5 @@
-require 'proposal'
-require 'shipmenttenderdata'
+require_relative 'proposal'
+require_relative 'shipmenttenderdata'
 # Tender class
 class Tender
   attr_reader :shipment_tender_data, :proposals, :max_proposals_count,
@@ -45,5 +45,10 @@ class Tender
 
     @proposals.each { |prop| yield prop }
     @proposals.clear
+  end
+
+  def to_s
+    "Id: #{@id}, Type: #{@shipment_tender_data.type},
+    Name: #{@shipment_tender_data.name}"
   end
 end

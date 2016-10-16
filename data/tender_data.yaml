@@ -1,0 +1,12 @@
+---
+- !ruby/object:Tender
+  shipment_tender_data: !ruby/object:ShipmentTenderData
+    type: Export
+    name: Lukas
+    route: !ruby/object:Route
+      source: A
+      destination: B
+    deadline: 2016.01.01
+  proposals: []
+  max_proposals_count: 6
+  id: 1

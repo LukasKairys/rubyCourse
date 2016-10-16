@@ -1,7 +1,7 @@
 require 'datastorage'
 
 describe DataStorage do
-  FILENAME = 'data/test_data.json'.freeze
+  FILENAME = 'data/test_data.yaml'.freeze
   before(:all) do
     File.open(FILENAME, 'w+')
   end

@@ -1,4 +1,4 @@
-require 'route'
+require_relative 'route'
 # ShipmentTenderData class
 class ShipmentTenderData
   attr_reader :type, :name, :route, :deadline

@@ -2,13 +2,14 @@ require 'proposal'
 require 'shipmenttenderdata'
 # Tender class
 class Tender
-  attr_reader :shipment_tender_data, :proposals, :max_proposals_count, :a,
-              :b, :c, :d
+  attr_reader :shipment_tender_data, :proposals, :max_proposals_count,
+              :id
 
-  def initialize(shipment_tender_data)
+  def initialize(id, shipment_tender_data)
     @shipment_tender_data = shipment_tender_data
     @proposals = []
     @max_proposals_count = 6
+    @id = id
   end
 
   def count_days_to_deadline

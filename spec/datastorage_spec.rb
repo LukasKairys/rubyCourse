@@ -1,17 +1,18 @@
 require 'datastorage'
 
 describe DataStorage do
-  let(:storage_test_filename) do
-    'data/test_data.json'
+  FILENAME = 'data/test_data.json'.freeze
+  before(:all) do
+    File.open(FILENAME, 'w+')
   end
   let(:storage) do
-    DataStorage.new(storage_test_filename)
+    DataStorage.new(FILENAME)
   end
   let(:data) do
     'test'
   end
   after(:all) do
-    File.delete(storage_test_filename)
+    File.delete(FILENAME)
   end
 
   context 'when data is passed for saving' do

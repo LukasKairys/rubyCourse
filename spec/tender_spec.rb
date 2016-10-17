@@ -119,4 +119,15 @@ describe Tender do
         .not_to yield_control
     end
   end
+
+  context 'when calling to_s method' do
+    it 'returns string with id, type and name' do
+      shipment_tender = described_class.new(1, shipment_tender_tomorrow_data)
+
+      expect(shipment_tender.to_s)
+        .to eq("Id: #{shipment_tender.id}, " +
+               "Type: #{shipment_tender.shipment_tender_data.type}, " +
+               "Name: #{shipment_tender.shipment_tender_data.name}")
+    end
+  end
 end

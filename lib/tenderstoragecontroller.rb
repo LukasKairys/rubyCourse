@@ -7,7 +7,7 @@ class TenderStorageController
     @storage = storage
     data_from_storage = storage.load_data
     @tenders = data_from_storage if data_from_storage
-    @last_id = 0
+    @last_id = 1
     @last_id = @tenders.last.id + 1 if @tenders.any?
   end
 
@@ -20,7 +20,8 @@ class TenderStorageController
   def remove_by_id(id)
     @tenders.delete_if { |tend| tend.id == id }
     @storage.save_data(@tenders)
-    # @last_id = 0
+    @last_id = 0 if @tenders.empty?
+    @last_id = @tenders.last.id + 1 if @tenders.any?
   end
 
   def update(tender)

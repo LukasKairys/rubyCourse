@@ -3,10 +3,10 @@ require 'tenderstoragecontroller'
 
 describe TenderStorageController do
   FILENAME = 'data/test_data.yaml'.freeze
-  before(:all) do
+  before(:each) do
     File.open(FILENAME, 'w+')
   end
-  after(:all) do
+  after(:each) do
     File.delete(FILENAME)
   end
   let(:storage) do
@@ -75,13 +75,24 @@ describe TenderStorageController do
     end
   end
 
-  context 'when tender is deleted' do
-    it 'sets last id to last tenders id incresed by one' do
+  context 'when not last tender is deleted' do
+    it 'last id should not be modified' do
       tender_storage_controller = described_class.new(storage)
       tender_storage_controller.add_new(tender)
       tender_storage_controller.add_new(updated_tender)
+      temp_last_id = tender_storage_controller.last_id
       tender_storage_controller.remove_by_id(1)
-      expect(tender_storage_controller.last_id).to eq(3)
+      expect(temp_last_id).to eq(tender_storage_controller.last_id)
+    end
+  end
+
+  context 'when latest tender is deleted' do
+    it 'last id should be set to latest id + 1' do
+      tender_storage_controller = described_class.new(storage)
+      tender_storage_controller.add_new(tender)
+      tender_storage_controller.add_new(updated_tender)
+      tender_storage_controller.remove_by_id(2)
+      expect(tender_storage_controller.last_id).to eq(2)
     end
   end
 end

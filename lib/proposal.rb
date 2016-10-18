@@ -1,9 +1,9 @@
 # Proposal class
 class Proposal
-  attr_reader :price, :company_name
+  attr_reader :price, :user
 
-  def initialize(company_name, price)
+  def initialize(user, price)
     @price = price
-    @company_name = company_name
+    @user = user
   end
 end

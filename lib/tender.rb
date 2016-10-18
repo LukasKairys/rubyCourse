@@ -4,8 +4,9 @@ require_relative 'shipmenttenderdata'
 class Tender
   attr_reader :shipment_tender_data, :proposals, :max_proposals_count,
               :id
+  attr_writer :id
 
-  def initialize(id, shipment_tender_data)
+  def initialize(shipment_tender_data)
     @shipment_tender_data = shipment_tender_data
     @proposals = []
     @max_proposals_count = 6
@@ -32,7 +33,7 @@ class Tender
     return false if proposals.length >= max_proposals_count
     return false if proposals
                     .select do |prop|
-                      prop.company_name == proposal.company_name
+                      prop.user.company == proposal.user.company
                     end
                     .any?
     true
@@ -48,7 +49,7 @@ class Tender
   end
 
   def to_s
-    "Id: #{@id}, Type: #{@shipment_tender_data.type}, " +
+    "Id: #{@id}, Type: #{@shipment_tender_data.type}, " \
     "Name: #{@shipment_tender_data.name}"
   end
 end

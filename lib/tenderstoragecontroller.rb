@@ -7,11 +7,12 @@ class TenderStorageController
     @storage = storage
     data_from_storage = storage.load_data
     @tenders = data_from_storage if data_from_storage
-    @last_id = 1
+    @last_id = 0
     @last_id = @tenders.last.id + 1 if @tenders.any?
   end
 
   def add_new(tender)
+    tender.id = @last_id
     tenders.push(tender)
     @storage.save_data(@tenders)
     @last_id += 1

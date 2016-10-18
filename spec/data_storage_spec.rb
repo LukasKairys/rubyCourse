@@ -6,7 +6,7 @@ describe DataStorage do
     File.open(FILENAME, 'w+')
   end
   let(:storage) do
-    DataStorage.new(FILENAME)
+    described_class.new(FILENAME)
   end
   let(:data) do
     'test'

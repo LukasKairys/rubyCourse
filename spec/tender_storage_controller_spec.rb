@@ -13,14 +13,14 @@ describe TenderStorageController do
     DataStorage.new(FILENAME)
   end
   let(:tender) do
-    Tender.new(1, ShipmentTenderData.new('Export', 'Wood tender',
-                                         Route.new('Vilnius', 'Kaunas'),
-                                         Date.today))
+    Tender.new(ShipmentTenderData.new('Export', 'Wood tender',
+                                      Route.new('Vilnius', 'Kaunas'),
+                                      Date.today))
   end
   let(:updated_tender) do
-    Tender.new(2, ShipmentTenderData.new('Import', 'Wood tender',
-                                         Route.new('Vilnius', 'Kaunas'),
-                                         Date.today))
+    Tender.new(ShipmentTenderData.new('Import', 'Wood tender',
+                                      Route.new('Vilnius', 'Kaunas'),
+                                      Date.today))
   end
   context 'when empty storage is passed' do
     it 'returns none tenders' do
@@ -42,9 +42,9 @@ describe TenderStorageController do
   context 'when new tender is added' do
     it 'increases last id' do
       tender_storage_controller = described_class.new(storage)
-      temp_last_id = tender_storage_controller.last_id
-      tender_storage_controller.add_new(tender)
-      expect(tender_storage_controller.last_id).to eq(temp_last_id + 1)
+      expect { tender_storage_controller.add_new(tender) }
+        .to change(tender_storage_controller, :last_id)
+        .from(0).to(1)
     end
   end
 
@@ -61,7 +61,7 @@ describe TenderStorageController do
   it 'removes tender by id' do
     tender_storage_controller = described_class.new(storage)
     tender_storage_controller.add_new(tender)
-    tender_storage_controller.remove_by_id(1)
+    tender_storage_controller.remove_by_id(0)
     tenders = tender_storage_controller.tenders
     expect(tenders.length).to eq(0)
   end
@@ -70,7 +70,7 @@ describe TenderStorageController do
     it 'sets last id to 0' do
       tender_storage_controller = described_class.new(storage)
       tender_storage_controller.add_new(tender)
-      tender_storage_controller.remove_by_id(1)
+      tender_storage_controller.remove_by_id(0)
       expect(tender_storage_controller.last_id).to eq(0)
     end
   end
@@ -81,7 +81,7 @@ describe TenderStorageController do
       tender_storage_controller.add_new(tender)
       tender_storage_controller.add_new(updated_tender)
       temp_last_id = tender_storage_controller.last_id
-      tender_storage_controller.remove_by_id(1)
+      tender_storage_controller.remove_by_id(2)
       expect(temp_last_id).to eq(tender_storage_controller.last_id)
     end
   end

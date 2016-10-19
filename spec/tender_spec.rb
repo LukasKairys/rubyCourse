@@ -144,11 +144,36 @@ describe Tender do
   end
 
   context 'when existing proposal company name is given' do
-    it 'should let user select the winner' do
+    it 'sets winning proposal' do
       shipment_tender = described_class.new(shipment_tender_tomorrow_data)
       shipment_tender.add_proposal(shipment_proposal)
 
       shipment_tender.select_winner(shipment_proposal.user.company.name)
+      expect(shipment_tender.winner_proposal).to eq(shipment_proposal)
+    end
+  end
+  context 'when not existing proposal company name is given' do
+    it 'raises error' do
+      shipment_tender = described_class.new(shipment_tender_tomorrow_data)
+      shipment_tender.add_proposal(shipment_proposal)
+
+      expect { shipment_tender.select_winner('zzzzzzz') }
+        .to raise_error(ArgumentError)
+    end
+  end
+  context 'when id is previously not set (default: -1)' do
+    it 'sets the id given' do
+      shipment_tender = described_class.new(shipment_tender_tomorrow_data)
+      shipment_tender.give_identity(1)
+      expect(shipment_tender.id).to eq(1)
+    end
+  end
+  context 'when id is previously set (not default: -1)' do
+    it 'leaves previous id' do
+      shipment_tender = described_class.new(shipment_tender_tomorrow_data)
+      shipment_tender.give_identity(1)
+      shipment_tender.give_identity(2)
+      expect(shipment_tender.id).to eq(1)
     end
   end
 end

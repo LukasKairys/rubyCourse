@@ -3,14 +3,17 @@ require_relative 'shipmenttenderdata'
 # Tender class
 class Tender
   attr_reader :shipment_tender_data, :proposals, :max_proposals_count,
-              :id
-  attr_writer :id
+              :id, :winner_proposal
 
   def initialize(shipment_tender_data)
     @shipment_tender_data = shipment_tender_data
     @proposals = []
     @max_proposals_count = 6
-    @id = id
+    @id = -1
+  end
+
+  def give_identity(id)
+    @id = id if @id == -1
   end
 
   def count_days_to_deadline
@@ -49,7 +52,12 @@ class Tender
   end
 
   def select_winner(company_name)
-    
+    found_winner_proposal = @proposals
+                            .find do |prop|
+                              prop.user.company.name == company_name
+                            end
+    raise ArgumentError, 'Not existing ' unless found_winner_proposal
+    @winner_proposal = found_winner_proposal
   end
 
   def to_s

@@ -12,7 +12,7 @@ class TenderStorageController
   end
 
   def add_new(tender)
-    tender.id = @last_id
+    tender.give_identity(@last_id)
     tenders.push(tender)
     @storage.save_data(@tenders)
     @last_id += 1

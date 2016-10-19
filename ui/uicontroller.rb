@@ -2,6 +2,9 @@ require_relative '../lib/DataStorage'
 require_relative '../lib/Tender'
 require_relative '../lib/ShipmentTenderData'
 require_relative '../lib/Route'
+require_relative '../lib/Company'
+require_relative '../lib/Proposal'
+require_relative '../lib/User'
 require_relative '../lib/TenderStorageController'
 # Main ui controller
 class UIController
@@ -32,7 +35,7 @@ class UIController
     when 1
       create_tender
     when 2
-      puts '2'
+      add_proposal_step_one
     when 3
       delete_tender
     when 4
@@ -47,6 +50,42 @@ class UIController
     puts 'Id'
     id = gets.chomp.to_i
     @tender_storage_controller.remove_by_id(id)
+  end
+
+  def add_proposal_step_one
+    puts 'Tender Id'
+    id = gets.chomp.to_i
+    add_proposal_step_two(id)
+  end
+
+  def add_proposal_step_two(id)
+    tender = @tender_storage_controller.tenders
+                                       .find { |tend| tend.id == id }
+
+    if tender.nil?
+      puts 'Tender does not exist'
+      puts ''
+      puts '--Write 0 to go back to meniu'
+      gets.chomp
+      return 
+    end
+
+    puts 'Email'
+    email = gets.chomp
+    puts 'Company name'
+    company = gets.chomp   
+    puts 'Price'
+    price = gets.chomp
+
+    company = Company.new(company)
+    user = User.new(email, 'randomsecurepassword', 'Freight forwarder')
+    user.assign_company(company)
+
+    tender.add_proposal(Proposal.new(user, price))
+
+    puts '--Success'
+    puts '--Write 0 to go back to meniu'
+    gets.chomp
   end
 
   def display_all_tenders
@@ -69,9 +108,10 @@ class UIController
     puts 'Deadline'
     deadline = gets.chomp
 
+    deadlineDate = DateTime.parse(deadline).to_date
     route = Route.new(route_a, route_b)
-    tender_data = ShipmentTenderData.new(type, cargo_name, route, deadline)
-    tender = Tender.new(@tender_storage_controller.last_id, tender_data)
+    tender_data = ShipmentTenderData.new(type, cargo_name, route, deadlineDate)
+    tender = Tender.new(tender_data)
 
     @tender_storage_controller.add_new(tender)
   end

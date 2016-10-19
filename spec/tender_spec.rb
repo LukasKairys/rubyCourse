@@ -138,7 +138,8 @@ describe Tender do
       expect(shipment_tender.to_s)
         .to eq("Id: #{shipment_tender.id}, " \
                "Type: #{shipment_tender.shipment_tender_data.type}, " \
-               "Name: #{shipment_tender.shipment_tender_data.name}")
+               "Name: #{shipment_tender.shipment_tender_data.name}" \
+               "Proposals count: #{shipment_tender.proposals.length}")
     end
   end
 end

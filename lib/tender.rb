@@ -50,6 +50,7 @@ class Tender
 
   def to_s
     "Id: #{@id}, Type: #{@shipment_tender_data.type}, " \
-    "Name: #{@shipment_tender_data.name}"
+    "Name: #{@shipment_tender_data.name}" \
+    "Proposals count: #{proposals.length}"
   end
 end

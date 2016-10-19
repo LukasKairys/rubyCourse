@@ -1,4 +1,5 @@
 require_relative 'route'
+require 'date'
 # ShipmentTenderData class
 class ShipmentTenderData
   attr_reader :type, :name, :route, :deadline

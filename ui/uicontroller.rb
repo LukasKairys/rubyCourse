@@ -67,13 +67,13 @@ class UIController
       puts ''
       puts '--Write 0 to go back to meniu'
       gets.chomp
-      return 
+      return
     end
 
     puts 'Email'
     email = gets.chomp
     puts 'Company name'
-    company = gets.chomp   
+    company = gets.chomp 
     puts 'Price'
     price = gets.chomp
 
@@ -108,9 +108,9 @@ class UIController
     puts 'Deadline'
     deadline = gets.chomp
 
-    deadlineDate = DateTime.parse(deadline).to_date
+    deadline_date = DateTime.parse(deadline).to_date
     route = Route.new(route_a, route_b)
-    tender_data = ShipmentTenderData.new(type, cargo_name, route, deadlineDate)
+    tender_data = ShipmentTenderData.new(type, cargo_name, route, deadline_date)
     tender = Tender.new(tender_data)
 
     @tender_storage_controller.add_new(tender)

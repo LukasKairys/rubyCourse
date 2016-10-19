@@ -48,6 +48,10 @@ class Tender
     @proposals.clear
   end
 
+  def select_winner(company_name)
+    
+  end
+
   def to_s
     "Id: #{@id}, Type: #{@shipment_tender_data.type}, " \
     "Name: #{@shipment_tender_data.name}" \

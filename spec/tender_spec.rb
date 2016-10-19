@@ -34,7 +34,7 @@ describe Tender do
   end
 
   let(:shipment_proposal) do
-    user = User.new('a@a.lt', 'a', 'forwarder')
+    user = User.new('a@a.lt', 'Aaaaa', 'forwarder')
     user.assign_company(Company.new('Test'))
     Proposal.new(user, 100)
   end
@@ -140,6 +140,15 @@ describe Tender do
                "Type: #{shipment_tender.shipment_tender_data.type}, " \
                "Name: #{shipment_tender.shipment_tender_data.name}" \
                "Proposals count: #{shipment_tender.proposals.length}")
+    end
+  end
+
+  context 'when existing proposal company name is given' do
+    it 'should let user select the winner' do
+      shipment_tender = described_class.new(shipment_tender_tomorrow_data)
+      shipment_tender.add_proposal(shipment_proposal)
+
+      shipment_tender.select_winner(shipment_proposal.user.company.name)
     end
   end
 end

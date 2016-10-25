@@ -7,4 +7,5 @@ group :development do
   gem 'guard-rubocop'
   gem 'guard-reek'
   gem 'guard-rspec'
+  gem 'mutant-rspec'
 end

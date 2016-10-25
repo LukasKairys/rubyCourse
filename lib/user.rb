@@ -1,16 +1,15 @@
 # Module for system user
 class User
-  attr_reader :email, :type, :company
-  def initialize(email, password, type)
+  attr_reader :email, :password, :company
+  def initialize(email, password)
     validate_password(password)
     @email = email
     @password = password
-    @type = type
     @company = Company.new('Empty')
   end
 
-  def assign_company(company)
-    @company = company if @company.name == 'Empty'
+  def assign_company(company_to_assign)
+    @company = company_to_assign if company.name.eql?('Empty')
   end
 
   def validate_password(password)

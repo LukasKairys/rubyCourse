@@ -1,0 +1,11 @@
+bundle exec mutant -I lib -r tender --use rspec 'Tender*'
+
+bundle exec mutant -I lib -r user --use rspec 'User*'
+
+bundle exec mutant -I lib -r route --use rspec 'Route*'
+
+bundle exec mutant -I lib -r proposalsdata --use rspec 'ProposalsData*'
+
+bundle exec mutant -I lib -r datastorage --use rspec 'DataStorage*'
+
+bundle exec mutant -I lib -r tenderstoragecontroller --use rspec 'TenderStorageController*'

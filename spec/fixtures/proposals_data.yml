@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  max_proposals_count: 1
+  deadline: 2016-11-12
+
+two:
+  max_proposals_count: 1
+  deadline: 2016-11-12

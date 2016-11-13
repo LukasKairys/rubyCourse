@@ -16,21 +16,21 @@
 # and, you'll have to watch "config/Guardfile" instead of "Guardfile"
 
 group :red_green_refactor, halt_on_fail: true, all_on_start: true do
-  guard :rspec, cmd: 'bundle exec rspec', all_on_start: true do
-    watch(%r{^lib/(.+)\.rb$}) { |m| "spec/#{m[1]}_spec.rb" }
-    watch(%r{^spec/.+_spec\.rb$})
+  guard :rspec, cmd: 'rspec', all_on_start: true do
+    watch(%r{^app/models/(.+)\.rb$}) { |m| "spec/models/#{m[1]}_spec.rb" }
+    watch(%r{^test/models/.+_spec\.rb$})
     watch('spec/spec_helper.rb') { 'spec' }
   end
 
   guard :rubocop, all_on_start: true do
-    watch(%r{^spec/.+_spec\.rb$})
-    watch(%r{^lib/(.+)\.rb$})
+    watch(%r{^test/models/.+_spec\.rb$})
+    watch(%r{^app/models/(.+)\.rb$})
     watch(%r{(?:.+/)?\.rubocop\.yml$}) { |m| File.dirname(m[0]) }
   end
 
   guard :reek, all_on_start: true do
-    watch(%r{^lib/(.+)\.rb$})
-    watch(%r{^spec/.+_spec\.rb$})
+    watch(%r{^app/models/(.+)\.rb$})
+    watch(%r{^test/models/.+_spec\.rb$})
     watch('.reek')
   end
 end

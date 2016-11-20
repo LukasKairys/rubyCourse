@@ -1,0 +1,19 @@
+user_one:
+  id: 1
+  email: 'a@a.lt'
+  password: 'Aaaaaa'
+
+user_two:
+  id: 2
+  email: 'b@a.lt'
+  password: 'AaAaaaa'
+
+user_short_pass:
+  id: 3
+  email: 'b@a.lt'
+  password: 'aaaA'
+
+user_lowercase_pass:
+  id: 4
+  email: 'b@a.lt'
+  password: 'aaaaaaa'

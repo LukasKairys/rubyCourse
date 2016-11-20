@@ -1,4 +1,3 @@
-# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,12 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161113095616) do
+ActiveRecord::Schema.define(version: 20161114184928) do
 
   create_table "companies", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "name"
+    t.integer  "user_id"
   end
 
   create_table "data_storages", force: :cascade do |t|
@@ -25,9 +25,11 @@ ActiveRecord::Schema.define(version: 20161113095616) do
   end
 
   create_table "proposals", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",         null: false
+    t.datetime "updated_at",         null: false
     t.float    "price"
+    t.integer  "user_id"
+    t.integer  "proposals_datum_id"
   end
 
   create_table "proposals_data", force: :cascade do |t|
@@ -35,21 +37,25 @@ ActiveRecord::Schema.define(version: 20161113095616) do
     t.date     "deadline"
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
+    t.integer  "winner_proposal_id"
+    t.integer  "tender_id"
   end
 
   create_table "routes", force: :cascade do |t|
     t.string   "source"
     t.string   "destination"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.integer  "shipment_tender_datum_id"
   end
 
   create_table "shipment_tender_data", force: :cascade do |t|
-    t.string   "type"
+    t.string   "shipment_type"
     t.string   "name"
     t.integer  "route_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.integer  "tender_id"
   end
 
   create_table "tenders", force: :cascade do |t|

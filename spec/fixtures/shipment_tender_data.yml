@@ -1,11 +1,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  type: 
-  name: MyString
-  route_id: 
+shipment_tender_data_one:
+  id: 1
+  shipment_type: 'Import'
+  name: 'Shoes tender'
+  tender_id: 1
 
-two:
-  type: 
-  name: MyString
-  route_id: 
+shipment_tender_data_two:
+  id: 2
+  shipment_type: 'Export'
+  name: 'Wood tender'
+  tender_id: 2
+
+shipment_tender_data_empty:
+  id: 3
+  shipment_type: ''
+  name: ''

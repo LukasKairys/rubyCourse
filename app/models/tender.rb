@@ -2,30 +2,22 @@ require_relative 'proposal'
 require_relative 'shipment_tender_datum'
 require_relative 'proposals_datum'
 # Tender class
-class Tender < ActiveRecord::Base
-  attr_reader :shipment_tender_data, :proposals_data, :id
-  has_one :shipment_tender_data
-  has_one :proposals_data
+class Tender < ApplicationRecord
+  has_one :shipment_tender_datum
+  has_one :proposals_datum
 
-  def initialize(shipment_tender_data, proposals_data)
-    @shipment_tender_data = shipment_tender_data
-    @proposals_data = proposals_data
-    @id = -1
-  end
-
-  def give_identity(identity)
-    @id = identity if id.equal?(-1)
-  end
+  validates_presence_of :shipment_tender_datum, :proposals_datum
 
   def edit(shipment_tender_data)
-    @shipment_tender_data = shipment_tender_data
-    proposals_data
-      .tender_data_changed { |prop| puts "Email sent to: #{prop.user.email}" }
+    self.shipment_tender_datum = shipment_tender_data
+    proposals_datum.tender_data_changed do |prop|
+      puts "Email sent to: #{prop.user.email}"
+    end if proposals_datum.proposals.any?
   end
 
   def to_s
-    "Id: #{id}, Type: #{shipment_tender_data.type}, " \
-    "Name: #{shipment_tender_data.name}, " \
-    "Proposals count: #{proposals_data.proposals.length}"
+    "Id: #{id}, Type: #{shipment_tender_datum.shipment_type}, " \
+    "Name: #{shipment_tender_datum.name}, " \
+    "Proposals count: #{proposals_datum.proposals.length}"
   end
 end

@@ -1,17 +1,18 @@
 # Module for system user
-class User < ActiveRecord::Base
-  attr_reader :email, :password, :company
+class User < ApplicationRecord
   has_one :company
+  has_many :proposals
+  validates_format_of :email,
+                      with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
+                      on: 'create'
+  validates_uniqueness_of :email
 
-  def initialize(email, password)
+  after_initialize do
     validate_password(password)
-    @email = email
-    @password = password
-    @company = Company.new('Empty')
   end
 
   def assign_company(company_to_assign)
-    @company = company_to_assign if company.name.eql?('Empty')
+    self.company = company_to_assign unless company
   end
 
   def validate_password(password)

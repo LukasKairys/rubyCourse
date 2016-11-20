@@ -1,7 +1,8 @@
 # Company module
-class Company < ActiveRecord::Base
+class Company < ApplicationRecord
+  belongs_to :user
   attr_reader :name
-  def initialize(name)
-    @name = name
-  end
+
+  validates_presence_of :name
+  validates_uniqueness_of :name
 end

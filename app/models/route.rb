@@ -1,9 +1,14 @@
-require 'routeregistry'
-# Tender class
-class Route < ActiveRecord::Base
-  attr_reader :source, :destination
+require_relative 'routeregistry'
 
-  def initialize(source, destination)
+# Tender class
+class Route < ApplicationRecord
+  validates :source_and_destination, presence: true, on: :create
+
+  after_initialize do
+    source_and_destination
+  end
+
+  def source_and_destination
     raise ArgumentError, 'Source and destination ' \
                           'cannot be the same' if source.eql?(destination)
 
@@ -12,14 +17,12 @@ class Route < ActiveRecord::Base
     raise ArgumentError, 'Source not exist' unless destinations
     raise ArgumentError, 'Such path is invalid' unless destinations
                                                        .include? destination
-    @source = source
-    @destination = destination
   end
 
   def set_closest_next_destination
     destinations = RouteRegistry.routes[destination.to_sym]
-    @source = destination
-    @destination = destinations[0]
+    self.source = destination
+    self.destination = destinations[0]
   end
 
   def ==(other)

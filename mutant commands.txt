@@ -9,3 +9,5 @@ bundle exec mutant -I lib -r proposalsdata --use rspec 'ProposalsData*'
 bundle exec mutant -I lib -r datastorage --use rspec 'DataStorage*'
 
 bundle exec mutant -I lib -r tenderstoragecontroller --use rspec 'TenderStorageController*'
+
+RAILS_ENV=test bundle exec mutant -r ./config/environment --use rspec ProposalsDatum --jobs 1

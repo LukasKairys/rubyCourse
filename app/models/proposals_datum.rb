@@ -1,14 +1,9 @@
 require_relative 'proposal'
 # Proposals data class
-class ProposalsDatum < ActiveRecord::Base
-  attr_reader :proposals, :max_proposals_count,
-              :winner_proposal, :deadline
-
-  def initialize(deadline)
-    @proposals = []
-    @max_proposals_count = 6
-    @deadline = deadline
-  end
+class ProposalsDatum < ApplicationRecord
+  has_many :proposals
+  has_one :proposal
+  belongs_to :tender
 
   def add_proposal(proposal)
     return false unless can_proposal_be_added(proposal)
@@ -33,7 +28,7 @@ class ProposalsDatum < ActiveRecord::Base
       prop.user.company.name.equal?(company_name)
     end
     raise ArgumentError, 'Not existing' unless found_winner_proposal
-    @winner_proposal = found_winner_proposal
+    self.winner_proposal_id = found_winner_proposal.id
   end
 
   def count_days_to_deadline

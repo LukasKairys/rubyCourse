@@ -1,9 +1,12 @@
 # Proposal class
-class Proposal < ActiveRecord::Base
-  attr_reader :price, :user
+class Proposal < ApplicationRecord
+  # attr_reader :price, :user
+  belongs_to :proposals_datum
+  belongs_to :user
 
-  def initialize(user, price)
-    @price = price
-    @user = user
-  end
+  validates_presence_of :price, :user
+  # def initialize(user, price)
+  #   @price = price
+  #   @user = user
+  # end
 end

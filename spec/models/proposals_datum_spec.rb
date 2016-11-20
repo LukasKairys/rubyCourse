@@ -16,27 +16,23 @@ end
 
 describe ProposalsDatum, type: 'model' do
   let(:shipment_proposal) do
-    user = User.new('a@a.lt', 'Aaaaa')
-    user.assign_company(Company.new('Test'))
-    Proposal.new(user, 100)
+    proposals(:proposal_one)
   end
 
   let(:shipment_proposal2) do
-    user = User.new('b@b.lt', 'Bbbbbb')
-    user.assign_company(Company.new('Test2'))
-    Proposal.new(user, 100)
+    proposals(:proposal_two)
   end
 
   let(:proposals_data_late) do
-    described_class.new(Date.today - 1)
+    described_class.new(deadline: Date.today - 1, max_proposals_count: 6)
   end
 
   let(:proposals_data_tomorrow) do
-    described_class.new(Date.today + 1)
+    described_class.new(deadline: Date.today + 1, max_proposals_count: 6)
   end
 
   let(:proposals_data_today) do
-    described_class.new(Date.today)
+    described_class.new(deadline: Date.today, max_proposals_count: 6)
   end
 
   context 'when deadline is set to one day ago' do
@@ -74,9 +70,9 @@ describe ProposalsDatum, type: 'model' do
     it 'do not adds proposals' do
       i = 1
       (proposals_data_today.max_proposals_count + 1).times do
-        user = User.new('b@b.lt', 'Bbbbbb')
-        user.assign_company(Company.new('Test #[i]'))
-        new_prop = Proposal.new(user, 100)
+        user = users(:user_two)
+        user.assign_company(companies(:company_one))
+        new_prop = Proposal.new(user: user, price: 100)
         proposals_data_today.add_proposal(new_prop)
         i += 1
       end
@@ -111,7 +107,6 @@ describe ProposalsDatum, type: 'model' do
     end
   end
 
-  # papildyti su kontekstu / papildyta i tender_spec
   context 'when tender data changed is called' do
     it 'does call block with list of proposals' do
       proposals_data_tomorrow.add_proposal(shipment_proposal)
@@ -137,7 +132,8 @@ describe ProposalsDatum, type: 'model' do
       proposals_data_tomorrow.add_proposal(shipment_proposal)
 
       proposals_data_tomorrow.select_winner(shipment_proposal.user.company.name)
-      expect(proposals_data_tomorrow.winner_proposal).to eq(shipment_proposal)
+      expect(proposals_data_tomorrow.winner_proposal_id)
+        .to eq(shipment_proposal.id)
     end
   end
 
@@ -152,8 +148,12 @@ describe ProposalsDatum, type: 'model' do
 
   # added after mutant
   context 'when proposals data is created' do
-    it 'it sets max proposal count to 6 and given deadline' do
+    it 'it sets max proposal count to 6' do
       expect(proposals_data_today.max_proposals_count).to eq(6)
+    end
+  end
+  context 'when proposals data is created' do
+    it 'it sets date to deadline' do
       expect(proposals_data_today.deadline).to eq(Date.today)
     end
   end

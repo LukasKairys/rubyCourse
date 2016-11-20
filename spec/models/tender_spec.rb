@@ -8,48 +8,57 @@ require_relative '../../app/models/proposals_datum'
 require_relative '../spec_helper'
 
 describe Tender, type: 'model' do
-  let(:test_user) do
-    company = Company.new('Test')
-    user = User.new('test@test.lt', 'randomSecurepassword')
-    user.assign_company(company)
-    return user
-  end
+  fixtures :all
+
   let(:shipment_tender_tomorrow) do
-    proposals_data = ProposalsDatum.new(Date.today + 1)
-    proposals_data.add_proposal(Proposal.new(test_user, 100))
-    described_class.new(
-      ShipmentTenderDatum.new('Import', 'Shoes tender',
-                              Route.new('A', 'C')),
-      proposals_data
-    )
+    tenders(:tender_one)
   end
 
   let(:shipment_tender_edited_data) do
-    ShipmentTenderDatum.new('Export', 'Wood tender',
-                            Route.new('C', 'A'))
+    shipment_tender_data(:shipment_tender_data_one)
   end
+
+  # mockus pafixinti , kad ifa tikrintu kazkoki
+  # rubocop rspec, mutant rubocop --require rubocop-rspec
 
   context 'when editing tender' do
     it 'changes shipment tender_data' do
       shipment_tender_tomorrow.edit(shipment_tender_edited_data) {}
 
-      expect(shipment_tender_tomorrow.shipment_tender_data)
+      expect(shipment_tender_tomorrow.shipment_tender_datum)
         .to eq(shipment_tender_edited_data)
     end
   end
 
-  context 'when editing tender' do
+  context 'when editing tender and there is proposals' do
     it 'informs @proposals_data about the change' do
-      proposals_data_spy = object_double(ProposalsDatum.new(Date.today),
-                                         tender_data_changed: true)
+      proposals_data_spy = object_double(
+        proposals_data(:proposals_datum_future),
+        tender_data_changed: true, proposals: [1]
+      )
       tender = described_class.new(
-        ShipmentTenderDatum.new('Import', 'Shoes tender',
-                                Route.new('A', 'B')),
-        proposals_data_spy
+        shipment_tender_datum: shipment_tender_data(:shipment_tender_data_empty)
       )
 
+      allow(tender).to receive(:proposals_datum) { proposals_data_spy }
       tender.edit(shipment_tender_edited_data)
       expect(proposals_data_spy).to have_received(:tender_data_changed)
+    end
+  end
+
+  context 'when editing tender and there is no proposals' do
+    it 'informs @proposals_data about the change' do
+      proposals_data_spy = object_double(
+        proposals_data(:proposals_datum_future),
+        tender_data_changed: true, proposals: []
+      )
+      tender = described_class.new(
+        shipment_tender_datum: shipment_tender_data(:shipment_tender_data_empty)
+      )
+
+      allow(tender).to receive(:proposals_datum) { proposals_data_spy }
+      tender.edit(shipment_tender_edited_data)
+      expect(proposals_data_spy).not_to have_received(:tender_data_changed)
     end
   end
 
@@ -57,22 +66,7 @@ describe Tender, type: 'model' do
   context 'when editing tender' do
     it 'notifies each user by sending email' do
       expect { shipment_tender_tomorrow.edit(shipment_tender_edited_data) }
-        .to output("Email sent to: #{test_user.email}\n").to_stdout
-    end
-  end
-
-  context 'when id is previously not set (default: -1)' do
-    it 'sets the id given' do
-      shipment_tender_tomorrow.give_identity(1)
-      expect(shipment_tender_tomorrow.id).to eq(1)
-    end
-  end
-
-  context 'when id is previously set (not default: -1)' do
-    it 'leaves previous id' do
-      shipment_tender_tomorrow.give_identity(3)
-      shipment_tender_tomorrow.give_identity(4)
-      expect(shipment_tender_tomorrow.id).to eq(3)
+        .to output("Email sent to: #{users(:user_one).email}\n").to_stdout
     end
   end
 
@@ -80,10 +74,11 @@ describe Tender, type: 'model' do
     it 'returns string with id, type and name' do
       expect(shipment_tender_tomorrow.to_s)
         .to eq("Id: #{shipment_tender_tomorrow.id}, " \
-               "Type: #{shipment_tender_tomorrow.shipment_tender_data.type}, " \
-               "Name: #{shipment_tender_tomorrow.shipment_tender_data.name}, " \
+               "Type: #{shipment_tender_tomorrow.shipment_tender_datum
+                        .shipment_type}, " \
+               "Name: #{shipment_tender_tomorrow.shipment_tender_datum.name}, "\
                'Proposals count: ' \
-               "#{shipment_tender_tomorrow.proposals_data.proposals.length}")
+               "#{shipment_tender_tomorrow.proposals_datum.proposals.length}")
     end
   end
 end

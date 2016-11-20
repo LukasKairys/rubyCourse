@@ -1,0 +1,32 @@
+route_ab:
+  id: 1
+  source: 'A'
+  destination: 'B'
+  shipment_tender_datum_id: 1
+
+route_aa:
+  id: 2
+  source: 'A'
+  destination: 'A'
+  shipment_tender_datum_id: 2
+
+route_az:
+  id: 3
+  source: 'A'
+  destination: 'Z'
+  shipment_tender_datum_id: 1
+
+route_testa:
+  id: 4
+  source: 'Test'
+  destination: 'A'
+
+route_bc:
+  id: 5
+  source: 'B'
+  destination: 'C'
+
+route_ac:
+  id: 6
+  source: 'A'
+  destination: 'C'

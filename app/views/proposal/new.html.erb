@@ -1,0 +1,18 @@
+<a href="/">Back</a>
+
+<h1>Create proposal</h1>
+
+<%= form_for :proposal, url: "/proposal?tender_id=#{params[:tender_id]}" do |f| %>
+    <p>
+      <%= f.collection_select :user_id, User.all, :id, :email, prompt: true %>
+    </p>
+
+    <p>
+      <%= f.label :price %><br>
+      <%= f.text_field :price %>
+    </p>
+
+    <p>
+      <%= f.submit %>
+    </p>
+<% end %>

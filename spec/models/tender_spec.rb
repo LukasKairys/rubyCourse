@@ -47,7 +47,7 @@ describe Tender, type: 'model' do
   end
 
   context 'when editing tender and there is no proposals' do
-    it 'informs @proposals_data about the change' do
+    it 'does not inform @proposals_data about the change' do
       proposals_data_spy = object_double(
         proposals_data(:proposals_datum_future),
         tender_data_changed: true, proposals: []

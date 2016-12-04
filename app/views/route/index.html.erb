@@ -1,0 +1,12 @@
+<a href="/">Back</a>
+
+<h1>Available routes</h1>
+
+<%= @available_routes.each do |key, array| %>
+    <p>
+      <%= array.each do |d| %>
+        <%= key %> -
+        <%= d %> <br/>
+      <% end %>
+    </p>
+<% end %>

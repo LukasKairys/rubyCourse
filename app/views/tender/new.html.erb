@@ -1,0 +1,34 @@
+<a href="/">Back</a>
+
+<h1>Create tender</h1>
+
+<%= form_for :tender, url: '/tender' do |f| %>
+    <p>
+      <%= f.label :type %><br>
+      <%= f.text_field :type %>
+    </p>
+
+    <p>
+      <%= f.label :cargo_name %><br>
+      <%= f.text_area :cargo_name %>
+    </p>
+
+    <p>
+      <%= f.label :route_from %><br>
+      <%= f.text_field :route_from %>
+    </p>
+
+    <p>
+      <%= f.label :route_to %><br>
+      <%= f.text_field :route_to %>
+    </p>
+
+    <p>
+      <%= f.label :deadline %><br>
+      <%= f.text_field :deadline %>
+    </p>
+
+    <p>
+      <%= f.submit %>
+    </p>
+<% end %>

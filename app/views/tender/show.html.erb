@@ -1,0 +1,9 @@
+<a href="/">Back</a>
+
+<h1>Tenders</h1>
+
+<%= @tenders.each do |tender| %>
+    <p>
+      <%= tender.to_s %> <a href="/proposal/new?tender_id=<%= tender.proposals_datum.id %>">Give proposal</a>
+    </p>
+<% end %>

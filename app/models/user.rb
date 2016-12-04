@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :proposals
   validates_format_of :email,
                       with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i,
-                      on: 'create'
+                      on: 'new'
   validates_uniqueness_of :email
 
   after_initialize do

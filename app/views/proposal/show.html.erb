@@ -1,0 +1,9 @@
+<a href="/">Back</a>
+
+<h1>Proposals</h1>
+
+<%= @proposals.each do |prop| %>
+    <p>
+      <%= prop.price %>, <%= prop.user.email %>, <%= prop.proposals_datum_id %>
+    </p>
+<% end %>

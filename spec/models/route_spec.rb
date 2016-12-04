@@ -1,5 +1,5 @@
 require_relative '../spec_helper'
-require_relative '../../app/models/routeregistry'
+require_relative '../../app/models/route_registry'
 require_relative '../../app/models/route'
 
 RSpec::Matchers.define :be_valid_route do

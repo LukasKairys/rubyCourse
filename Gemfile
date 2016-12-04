@@ -45,6 +45,9 @@ group :development do
   gem 'mutant-rspec'
   gem 'activerecord'
   gem 'rspec-rails'
+  gem 'simplecov'
+  gem 'rubocop-rspec'
+  gem 'rails-controller-testing'
 
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console', '~> 2.0'

@@ -1,0 +1,9 @@
+<a href="/">Back</a>
+
+<h1>Users</h1>
+
+<%= @users.each do |user| %>
+    <p>
+      <%= user.email %>
+    </p>
+<% end %>

@@ -1,0 +1,24 @@
+<a href="/">Back</a>
+
+<h1>Create user</h1>
+
+<%= form_for :user, url: '/user' do |f| %>
+    <p>
+      <%= f.label :email %><br>
+      <%= f.text_field :email %>
+    </p>
+
+    <p>
+      <%= f.label :password %><br>
+      <%= f.text_field :password %>
+    </p>
+
+    <p>
+      <%= f.label :company_name %><br>
+      <%= f.text_field :company_name %>
+    </p>
+
+    <p>
+      <%= f.submit %>
+    </p>
+<% end %>

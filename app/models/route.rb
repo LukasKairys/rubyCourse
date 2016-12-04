@@ -1,4 +1,4 @@
-require_relative 'routeregistry'
+require_relative 'route_registry'
 
 # Tender class
 class Route < ApplicationRecord
